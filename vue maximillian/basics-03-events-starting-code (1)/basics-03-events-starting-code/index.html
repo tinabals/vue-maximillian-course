@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vue Basics</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jost:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://unpkg.com/vue@next" defer></script>
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <h1>Vue Events</h1>
+    </header>
+    <section id="events">
+      <h2>Events in Action</h2>
+      <button @click="add(4)">Add</button>
+      <button @click="remove(5)">Remove</button>
+      <p>Result: {{ counter }}</p>
+      <!-- getting the input using v-on -->
+      <!-- if your are not just pointing at the event(without the $event, the function didn't run..so it is needed when you want to pass two arguments..and want to get access to the event) -->
+      
+      <!-- <input type="text" v-on:input="setName($event, 'Balogun')">
+      <p> Your Name: {{name}}</p> -->
+
+    <!-- event prevent modifier: it does the same thing as e.preventDefault() which is usually used in JS --> 
+    <h2>Events in Action</h2>
+    <!-- rightclicks alone -->
+      <button @click.right="add(4)">Add</button>
+      <!-- left click alone -->
+      <button @click.left="remove(5)">Remove</button>
+      <p>Result: {{ counter }}</p>
+      <!-- when enter is pressed and released, run corfirmInput -->
+       <input type="text" v-on:input="setName($event, 'Balogun')" v-on:keyup.enter="confirmInput">
+      <p> Your Name: {{name}}</p>
+    <form v-on:submit.prevent="submitForm">
+      <input type="text" >
+      <button>Sign Up!</button>
+    </form>
+
+    </section>
+  </body>
+</html>/

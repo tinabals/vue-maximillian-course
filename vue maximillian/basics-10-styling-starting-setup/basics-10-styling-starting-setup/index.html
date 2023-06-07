@@ -33,13 +33,14 @@
       :class="boxAClasses"
       @click="boxSelected('A')"
       ></div>
-
+      <!-- end -->
       <!-- another syntax using array  -->
       <div  :class="['demo',{active : boxBSelected}]"
       @click="boxSelected('B')"></div>
+      <!-- end of array syntax -->
 
-      <div class="demo" :class="{active : boxBSelected}"
-      @click="boxSelected('B')"></div>
+      <!-- <div class="demo" :class="{active : boxBSelected}"
+      @click="boxSelected('B')"></div> -->
       <div class="demo" 
       :class="{active : boxCSelected}"
       @click="boxSelected('C')"></div>

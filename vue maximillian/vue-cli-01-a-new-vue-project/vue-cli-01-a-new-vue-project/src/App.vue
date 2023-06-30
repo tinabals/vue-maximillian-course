@@ -1,7 +1,6 @@
 <template>
     <section>
       <new-friend @add-contact="addContact">
-
       </new-friend>
        <header>
         <h2> My Friends </h2>

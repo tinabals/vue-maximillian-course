@@ -1,6 +1,6 @@
 <template>
 
-    <li> {{name }} {{ friendIsFsvorite  ? '(Favourite)' : '' }}</li>
+    <li> {{name }} {{ isFavorite  ? '(Favourite)' : '' }}</li>
     <button @click="toggleFavorite">toggle favorite</button>
     <button @click="toggleDetails">{{ detailsAreVisible ? 'Hide' : 'Show' }}</button>
     
@@ -12,11 +12,28 @@
             <strong>Email : {{ emailAddress }}</strong>
         </li>
     </ul>
+    <button @click="$emit('delete', id)"> Delete Friend</button>
     
 </template> 
 
 <script>
 export default {
+    // emits: {
+    //     'toggle-favorite' : function(id){
+    //         if(id){
+    //             return true
+    //         } else{
+    //             console.warn('id is missing')
+    //             return false
+    //         }
+    //     }, 
+
+    // },
+    //or //
+    emits : ['toggle-favorite','delete'],
+
+
+    //props//
     // props: [
     //     'name',
     //     'phoneNumber',
@@ -24,6 +41,10 @@ export default {
     //     'isFavorite'
     // ],
     props : {
+        id : {
+            type  : String,
+            required : true
+        },
         name : {
             type  : String,
             required : true
@@ -48,7 +69,7 @@ export default {
     data(){
         return {
             detailsAreVisible : false,
-            friendIsFsvorite : this.isFavorite
+            // friendIsFsvorite : this.isFavorite
         }
     },
     methods: {
@@ -63,8 +84,12 @@ export default {
             // } else{
             //     this.friendIsFsvorite = '1'
             // }
-             this.friendIsFsvorite = ! this.friendIsFsvorite
-        }
+            //  this.friendIsFsvorite = ! this.friendIsFsvorite
+            this.$emit('toggle-favorite', this.id )
+        },
+        // deleteFriend(){
+        //     this.$emit('delete')
+        // }
     },
     mounted(){
         console.log(this.phoneNumber, this.isFavorite)

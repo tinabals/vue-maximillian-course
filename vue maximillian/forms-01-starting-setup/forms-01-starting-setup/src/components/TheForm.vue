@@ -59,18 +59,29 @@
       <button>Save Data</button>
     </div>
   </form>
+  <button @click="setSelected('my-first')">First</button>
+  <button @click="setSelected('my-second')"> Second </button>
+  <keep-alive>
+    <component :is="isSelected"></component>
+  </keep-alive>
+  
 </template>
 <script>
 import RatingControl from './RatingControl'
+import MyFirst from './MyFirst.vue'
+import MySecond from './MySecond.vue'
  
 
 export default {
   components : {
-    RatingControl
+    RatingControl,
+    MyFirst,
+    MySecond
   },
 
   data(){
     return {
+      isSelected : 'my-second',
       userName : '',
       userAge : null,
       referrer : 'wom',
@@ -85,6 +96,9 @@ export default {
     }
   },
   methods : {
+    setSelected(cmp){
+       this.isSelected = cmp
+    },
     submitForm(){
          console.log('username : ' + this.userName)
          console.log('user Age')

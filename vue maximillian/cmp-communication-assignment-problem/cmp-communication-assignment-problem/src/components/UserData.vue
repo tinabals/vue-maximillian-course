@@ -32,7 +32,7 @@ export default {
         },
         clearInputField(){
             this.name = ''
-           this.age = ''
+            this.age = ''
 
         }
 

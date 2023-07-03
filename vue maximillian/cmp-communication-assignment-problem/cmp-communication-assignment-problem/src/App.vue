@@ -2,8 +2,6 @@
     <div>
         <user-data 
         @add-contact = "addContact"
-        
-        
         ></user-data>
         <h1>{{ users.length ? 'Active Users' : 'No User Avsilable'}}</h1>
         <active-user v-for="user in users"

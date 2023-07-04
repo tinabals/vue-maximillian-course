@@ -1,13 +1,26 @@
 <template>
-  <button @click="addOne"> Add 1</button>
+  <button @click="inc"> Add 6</button>
+  <button @click="increase(payload)"> Add 30</button>
 </template>
 
 <script>
+import {mapActions} from 'vuex'
 export default {
-   methods : {
-    addOne(){
-        this.$store.dispatch('increment')
+  data(){
+    return {
+      payload : {
+      value : 10
+      }
     }
+  },
+   methods : {
+
+    // ...mapActions('increment')
+    ...mapActions({
+      inc : 'increment',
+      increase : 'increase'
+    })
+   
    }
 }
 </script>

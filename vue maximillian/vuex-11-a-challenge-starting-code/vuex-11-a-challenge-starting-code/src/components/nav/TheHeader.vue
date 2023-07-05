@@ -29,6 +29,18 @@ export default {
   computed : {
     cartQuantity(){
       return this.$store.getters['carts/quantity']
+    },
+    isLoggedIn(){
+      return this.$store.getters.isAuth
+    }
+
+  },
+  methods : {
+    login(){
+      this.$store.dispatch('login')
+    },
+    logout(){
+      this.$store.dispatch('logout')
     }
   }
 };

@@ -8,10 +8,10 @@
  export default {
      computed: {
     //  counter(){
-    //  return this.$store.getters.normalizedCounter
+    //  return this.$store.getters[numbers/normalizedCounter]
   //  }
 
-        ...mapGetters(['normalizedCounter'])
+        ...mapGetters('numbers',['normalizedCounter'])
    },
  
  }

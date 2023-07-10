@@ -10,6 +10,16 @@ const store = createStore({
         requests : requestModule
 
         
+    },
+    state(){
+         return{
+            userId : 'c3'
+         }
+    },
+    getters : {
+        userId(state){
+            return state.userId
+        }
     }
 })
 

@@ -1,15 +1,22 @@
 <template>
+  <div>
+  <base-dialog :show="!!error" title="An Error occured!" @close="handleError">
+    <p>{{ error }}</p>
+  </base-dialog>
   <section>
     <coach-filter @change-filter="setFilter"></coach-filter>
   </section>
   <section>
     <base-card>
         <div class="controls">
-            <base-button mode="outline">Refresh</base-button>
-            <base-button link to="/register" v-if="!isCoach"> Register As coach</base-button>
+            <base-button mode="outline" @click="loadCoaches(true)">Refresh</base-button>
+            <base-button link to="/register" v-if="!isCoach && !isLoading"> Register As coach</base-button>
 
         </div>
-      <ul v-if="hasCoaches">
+        <div v-if="isLoading">
+          <base-spinner></base-spinner>
+        </div>
+      <ul v-else-if="hasCoaches">
           <coach-item v-for="coach in filteredCoaches" 
           :key="coach.id" 
           :first-name="coach.firstName"
@@ -21,6 +28,7 @@
       <h3 v-else> No Coaches Found</h3>
   </base-card>
   </section>
+</div>
 </template>
 
 <script>
@@ -33,6 +41,8 @@ export default {
     },
     data(){
       return {
+        isLoading : false,
+        error : null,
         activeFilters : {
         frontend : true,
         backend : true,
@@ -57,7 +67,9 @@ export default {
             })
         },
         hasCoaches(){
-            return this.$store.getters['coaches/hasCoaches']
+        
+            return  !this.isLoading &&  this.$store.getters['coaches/hasCoaches']
+
         },
         isCoach(){
             return this.$store.getters['coaches/isCoach']
@@ -67,7 +79,22 @@ export default {
     methods: {
       setFilter(updatedFilters){
           this.activeFilters = updatedFilters
+      },
+      async loadCoaches(refresh = false){
+      this.isLoading = true
+      try{
+      await  this.$store.dispatch('coaches/loadCoaches', {forceRefresh : refresh })
+      }catch(error){
+        this.error = error.message || 'Something went wrong'
       }
+      this.isLoading = false
+      },
+      handleError(){
+        this.error = null
+      }
+    },
+    created(){
+      this.loadCoaches()
     }
 
 }

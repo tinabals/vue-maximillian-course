@@ -1,6 +1,7 @@
 <template>
   <!-- <router-view></router-view> -->
-   <section>
+  <div>
+    <section>
     <base-card>
          <h2> {{ fullName }}</h2>
           <h3> $ {{ rate }}/hour</h3>
@@ -21,6 +22,7 @@
     <p>{{ description }}</p>
   </base-card>
    </section>
+  </div>
  
 </template>
 

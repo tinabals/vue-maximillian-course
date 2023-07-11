@@ -20,5 +20,30 @@ export default {
             id : userId,
             ...coach
         })
+    },
+  async  loadCoaches(context, payload){
+    if(!payload.forceRefresh && !context.getters.shouldUpdate){
+        return;
+    }
+       const response = await fetch(`https://http-proj-91e04-default-rtdb.firebaseio.com/coaches.json`)
+       const respomseData =  await response.json()
+
+       if(!response.ok){
+        const error = new Error(respomseData.message || 'Failed To Fetch')
+        throw error
+       }
+       const coaches = []
+       for(const key in respomseData){
+        const coach = {
+            firstName : respomseData[key].firstName,
+            lastName : respomseData[key].lastName,
+            description : respomseData[key].description,
+            areas : respomseData[key].areas,
+            hourlyRate : respomseData[key].hourlyRate
+        }
+        coaches.push(coach)
+       }
+       context.commit('setCoaches', coaches)
+       context.commit('setFetchTimeStamp')
     }
 }

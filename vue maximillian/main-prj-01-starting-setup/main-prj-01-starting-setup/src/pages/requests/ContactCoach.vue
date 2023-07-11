@@ -22,6 +22,7 @@
 export default {
   data(){
     return{
+      error : '',
       email : '',
       message  : '',
       formIsValid : true

@@ -1,4 +1,12 @@
 <template>
+    <div>
+    <base-dialog :show="!!error" title="An Error Occured" @close="handleError">
+      <p>{{ error }}</p>
+   </base-dialog>
+    <base-dialog :show="isLoading" title="Authenticating..." fixed>
+      <base-spinner></base-spinner>
+
+    </base-dialog>
     <base-card>
     <form @submit.prevent="submitForm">
         <div class="form-control">
@@ -10,10 +18,11 @@
             <input type="password" id="password" v-model.trim="password"/>
         </div>
         <p v-if="!formIsValid">Please type in the correct email and ensure the password is atleast the length of 6</p>
+        <base-button>{{ submitButtonCaption }}</base-button>
+        <base-button type="button" mode="flat" @click="switchAuthMode">{{ switchModeButtonCaption }}</base-button>
     </form>
-    <base-button>{{ submitButtonCaption }}</base-button>
-    <base-button type="button" mode="flat" @click="switchAuthMode">{{ switchModeButtonCaption }}</base-button>
     </base-card>
+</div>
 </template>
 
 <script>
@@ -23,7 +32,9 @@ export default {
             email: '',
             password : '',
             formIsValid : true,
-            mode : 'login'
+            mode : 'login',
+            isLoading: false ,
+            error : null
         }
     },
     computed : {
@@ -43,8 +54,7 @@ export default {
         }
     },
     methods: {
-        submitForm(){
-          console.log(this.email, this.password)
+       async submitForm(){
             this.formIsValid = true
               if(this.email === '' ||
                 !this.email.includes('@')||
@@ -52,6 +62,25 @@ export default {
                     this.formIsValid = false
                     return
                 }
+             this.isLoading = true
+             const actionPayload = {
+                    email : this.email,
+                    password : this.password
+             } 
+          try{
+            if(this.mode === 'login')   {
+                console.log('heyy')
+            await this.$store.dispatch('login', actionPayload)
+                console.log('gotcha')
+            }
+            else
+            {
+           await  this.$store.dispatch('signup', actionPayload)
+            }
+          } catch(err){
+            this.error = err.message || 'Failed to authenticate, try later'
+          }
+            this.isLoading = false
         },
         switchAuthMode(){
             if(this.mode==='login'){
@@ -59,6 +88,9 @@ export default {
             }else{
                 this.mode = 'login'
             }
+        },
+        handleError(){
+            this.error = null;
         }
     }
 }

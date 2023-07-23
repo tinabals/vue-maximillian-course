@@ -4,6 +4,7 @@ export default{
             userEmail : payload.email,
             message : payload.message
         }
+       
       const response = await fetch(`https://http-proj-91e04-default-rtdb.firebaseio.com/requests/${payload.coachId}.json`,
              {
                 method : 'POST',
@@ -22,7 +23,9 @@ export default{
     },
     async fetchRequests(context){
         const coachId = context.rootGetters.userId
-        const response = await fetch(`https://http-proj-91e04-default-rtdb.firebaseio.com/requests/${coachId}.json`)
+        const token = context.rootGetters.token
+        console.log(token)
+        const response = await fetch(`https://http-proj-91e04-default-rtdb.firebaseio.com/requests/${coachId}.json?auth=` + token)
         const responseData = await response.json()
 
         if(!response.ok){

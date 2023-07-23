@@ -8,7 +8,9 @@ export default {
             areas : data.areas,
             hourlyRate : data.rate
         }
-      const response = await fetch(`https://http-proj-91e04-default-rtdb.firebaseio.com/coaches/${userId}.json`, {
+        const token = context.rootGetters.token
+        console.log(token,'here')
+        const response = await fetch(`https://http-proj-91e04-default-rtdb.firebaseio.com/coaches/${userId}.json?auth=` + token, {
             method : 'PUT', //this updates an id or creates...post just creates everytime tho it exists or not
             body : JSON.stringify(coach)
         })
